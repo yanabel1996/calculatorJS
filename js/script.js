@@ -3,10 +3,15 @@ let b = '';
 let sign = '';
 let finish = false;
 
+
+
 const digit = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
 const action = ['-', '+', 'X', '/', '%'];
 
 const out = document.querySelector('.calculator__screen p');
+const dot = document.querySelector('.dot');
+
+dot.disabled = false;
 
 function clearAll() {
     a = '';
@@ -40,11 +45,16 @@ document.querySelector('.calculator__buttons').onclick = (event) => {
     out.textContent = '';
     const key = event.target.textContent;
 
-
     if (digit.includes(key)) {
         if (b === '' && sign === '') {
             a += key;
             out.textContent = a;
+
+            if (a.includes('.')) {
+                dot.disabled = true;
+            } else {
+                dot.disabled = false;
+            }
         } else if (a !== '' && b !== '' && finish) {
             b = key;
             finish = false;
@@ -52,14 +62,18 @@ document.querySelector('.calculator__buttons').onclick = (event) => {
         } else {
             b += key;
             out.textContent = b;
+
+            if (b.includes('.')) {
+                dot.disabled = true;
+            } else {
+                dot.disabled = false;
+            }
         }
-        // console.log(a, b, sign);
     }
 
     if (action.includes(key)) {
         sign = key;
         out.textContent = sign;
-        // console.log(a, b, sign);
         return;
     }
 
@@ -95,6 +109,5 @@ document.querySelector('.calculator__buttons').onclick = (event) => {
         } else {
             out.textContent = a;
         }
-        // console.log(a, b, sign);
     }
 }
